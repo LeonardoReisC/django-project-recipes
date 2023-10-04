@@ -5,7 +5,13 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return HttpResponse('Home')
+    return render(
+        request,
+        'recipes/home.html',
+        context={
+            'name': 'Leonardo',
+        }
+    )
 
 
 def contact(request):

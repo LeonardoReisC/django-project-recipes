@@ -160,6 +160,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .recipe-list-item {
     max-width: 64rem;
+    display: flex;
+    flex-flow: column nowrap;
     background: var(--color-white);
 }
 
@@ -179,6 +181,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .recipe-content {
+    flex: 1;
     padding: var(--spacing-gutter-medium);
     padding-top: 2rem;
 }
@@ -240,7 +243,6 @@ h1, h2, h3, h4, h5, h6 {
 .main-content-detail .recipe-list-item:hover {
     transform: scale(1);
     box-shadow: -5px 5px 10px rgba(0, 0, 0, .25);
-
 }
 
 .main-footer {

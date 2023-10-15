@@ -11,3 +11,13 @@ def home(request):
             'name': 'Leonardo',
         }
     )
+
+
+def recipe(request, id):
+    return render(
+        request,
+        'recipes/pages/recipe-view.html',
+        context={
+            'name': 'Leonardo',
+        }
+    )

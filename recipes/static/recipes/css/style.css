@@ -231,6 +231,18 @@ h1, h2, h3, h4, h5, h6 {
     filter: brightness(2);
 }
 
+.main-content-detail .recipe-list-item {
+    max-width: 84rem;
+    margin: 0 auto;
+    background: var(--color-white);
+}
+
+.main-content-detail .recipe-list-item:hover {
+    transform: scale(1);
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, .25);
+
+}
+
 .main-footer {
     display: flex;
     align-items: center;

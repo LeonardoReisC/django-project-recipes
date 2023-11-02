@@ -13,7 +13,7 @@ class RecipeModelTest(RecipeTestBase):
         return Recipe(
             title='Recipe Title',
             description='Recipe Description',
-            slug='recipe-slug',
+            slug='recipe-slug-test',
             preparation_time=10,
             preparation_time_unit='Minutes',
             servings=5,

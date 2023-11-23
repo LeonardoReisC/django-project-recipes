@@ -10,10 +10,10 @@ class RecipeModelTest(RecipeTestBase):
         return super().setUp()
 
     def make_recipe_no_defaults(self):
-        return Recipe(
+        recipe = Recipe(
             title='Recipe Title',
             description='Recipe Description',
-            slug='recipe-slug-test',
+            slug='recipe-slug-for-no-defaults',
             preparation_time=10,
             preparation_time_unit='Minutes',
             servings=5,
@@ -22,6 +22,10 @@ class RecipeModelTest(RecipeTestBase):
             category=self.make_category(name='Test Default Category'),
             author=self.make_author(username='newuser'),
         )
+
+        recipe.full_clean()
+        recipe.save()
+        return recipe
 
     @parameterized.expand([
         ('title', 65),
@@ -37,8 +41,6 @@ class RecipeModelTest(RecipeTestBase):
 
     def test_recipe_preparation_steps_is_html_is_false_by_default(self):
         recipe = self.make_recipe_no_defaults()
-        recipe.full_clean()
-        recipe.save()
 
         self.assertFalse(
             recipe.preparation_steps_is_html,
@@ -47,8 +49,6 @@ class RecipeModelTest(RecipeTestBase):
 
     def test_recipe_is_published_is_false_by_default(self):
         recipe = self.make_recipe_no_defaults()
-        recipe.full_clean()
-        recipe.save()
 
         self.assertFalse(
             recipe.is_published,

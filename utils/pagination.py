@@ -16,4 +16,14 @@ def make_pagination_range(page_range, page_qty, current_page):
     if stop_range >= total_pages:
         start_range = start_range - abs(total_pages - stop_range)
 
-    return page_range[start_range:stop_range]
+    return {
+        'pagination': page_range[start_range:stop_range],
+        'page_range': page_range,
+        'page_qty': page_qty,
+        'current_page': current_page,
+        'total_pages': total_pages,
+        'start_range': start_range,
+        'stop-range': stop_range,
+        'first_page_out_of_range': current_page > middle_range,
+        'last_page_out_of_range': stop_range < total_pages,
+    }

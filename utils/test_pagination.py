@@ -9,7 +9,7 @@ class PaginationTest(TestCase):
             page_range=list(range(1, 21)),
             page_qty=4,
             current_page=1
-        )
+        )['pagination']
 
         self.assertEqual([1, 2, 3, 4], pagination)
 
@@ -19,7 +19,7 @@ class PaginationTest(TestCase):
             page_range=list(range(1, 21)),
             page_qty=4,
             current_page=page
-        )
+        )['pagination']
         self.assertEqual([1, 2, 3, 4], pagination)
 
     @parameterized.expand([4, 10, 18])
@@ -28,7 +28,7 @@ class PaginationTest(TestCase):
             page_range=list(range(1, 21)),
             page_qty=4,
             current_page=page
-        )
+        )['pagination']
         page_list = list(range(page-1, page+3))
 
         self.assertEqual(page_list, pagination)
@@ -39,5 +39,5 @@ class PaginationTest(TestCase):
             page_range=list(range(1, 21)),
             page_qty=4,
             current_page=page
-        )
+        )['pagination']
         self.assertEqual([17, 18, 19, 20], pagination)

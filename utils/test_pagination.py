@@ -21,3 +21,23 @@ class PaginationTest(TestCase):
             current_page=page
         )
         self.assertEqual([1, 2, 3, 4], pagination)
+
+    @parameterized.expand([4, 10, 18])
+    def test_make_pagination_range_changes_with_middle_pages(self, page):
+        pagination = make_pagination_range(
+            page_range=list(range(1, 21)),
+            page_qty=4,
+            current_page=page
+        )
+        page_list = list(range(page-1, page+3))
+
+        self.assertEqual(page_list, pagination)
+
+    @parameterized.expand([19, 20, 21])
+    def test_make_pagination_range_is_static_with_last_pages(self, page):  # noqa: E501
+        pagination = make_pagination_range(
+            page_range=list(range(1, 21)),
+            page_qty=4,
+            current_page=page
+        )
+        self.assertEqual([17, 18, 19, 20], pagination)

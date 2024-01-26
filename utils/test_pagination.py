@@ -41,3 +41,12 @@ class PaginationTest(TestCase):
             current_page=page
         )['pagination']
         self.assertEqual([17, 18, 19, 20], pagination)
+
+    @parameterized.expand([1, 2, 3, 4])
+    def test_make_pagination_range_is_static_with_page_qty_bigger_than_pages(self, page):  # noqa: E501
+        pagination = make_pagination_range(
+            page_range=list(range(1, 4)),
+            page_qty=4,
+            current_page=page
+        )['pagination']
+        self.assertEqual([1, 2, 3], pagination)

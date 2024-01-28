@@ -27,9 +27,7 @@ def strong_password(password):
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Type your password here'
-        }),
+        widget=forms.PasswordInput(),
         error_messages={
             'required': 'This field must not be empty.'
         },
@@ -43,9 +41,7 @@ class RegisterForm(forms.ModelForm):
 
     password2 = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Type your password here again'
-        })
+        widget=forms.PasswordInput()
     )
 
     def __init__(self, *args, **kwargs):
@@ -53,7 +49,12 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['first_name'], 'e.g. Leonardo')
         add_placeholder(self.fields['last_name'], 'e.g. Reis')
         add_placeholder(self.fields['username'], 'Type your username here')
-        add_placeholder(self.fields['email'], 'Type your email here')
+        add_placeholder(self.fields['email'], 'Type your e-mail here')
+        add_placeholder(self.fields['password'], 'Type your password here')
+        add_placeholder(
+            self.fields['password2'],
+            'Type your password here again'
+        )
 
     class Meta:
         model = User
@@ -78,14 +79,6 @@ class RegisterForm(forms.ModelForm):
             'username': {
                 'required': 'This field must not be empty.'
             }
-        }
-        widgets = {
-            'first_name': forms.TextInput(attrs={
-                'placeholder': 'Type your first name here'
-            }),
-            'password': forms.PasswordInput(attrs={
-                'placeholder': 'Type your password here'
-            })
         }
 
     def clean_first_name(self):

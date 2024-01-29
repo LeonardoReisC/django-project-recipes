@@ -12,7 +12,7 @@ class AuthorRegisterFormUnitTest(TestCase):
         ('username', 'Type your username here'),
         ('email', 'Type your e-mail here'),
         ('password', 'Type your password here'),
-        ('password2', 'Type your password here again'),
+        ('password_confirm', 'Type your password here again'),
     ])
     def test_fields_placeholder_is_correct(self, field, placeholder):
         form = RegisterForm()
@@ -40,7 +40,7 @@ class AuthorRegisterFormUnitTest(TestCase):
         ('username', 'Username'),
         ('email', 'E-mail'),
         ('password', 'Password'),
-        ('password2', 'Password2'),
+        ('password_confirm', 'Confirm your password'),
     ])
     def test_fields_label_is_correct(self, field, label):
         form = RegisterForm()

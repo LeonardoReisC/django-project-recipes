@@ -40,10 +40,10 @@ class RegisterForm(forms.ModelForm):
         label='Password',
     )
 
-    password2 = forms.CharField(
+    password_confirm = forms.CharField(
         required=True,
         widget=forms.PasswordInput(),
-        label='Password2',
+        label='Confirm your password',
     )
 
     def __init__(self, *args, **kwargs):
@@ -54,7 +54,7 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['email'], 'Type your e-mail here')
         add_placeholder(self.fields['password'], 'Type your password here')
         add_placeholder(
-            self.fields['password2'],
+            self.fields['password_confirm'],
             'Type your password here again'
         )
 
@@ -97,11 +97,11 @@ class RegisterForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
-        password2 = cleaned_data.get('password2')
+        password_confirm = cleaned_data.get('password_confirm')
 
-        if password != password2:
+        if password != password_confirm:
             raise ValidationError({
-                'password2': ValidationError(
+                'password_confirm': ValidationError(
                     'Must be equal to password',
                     code='invalid',
                 ),

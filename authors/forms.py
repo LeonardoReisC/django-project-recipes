@@ -82,18 +82,6 @@ class RegisterForm(forms.ModelForm):
             }
         }
 
-    def clean_first_name(self):
-        data = self.cleaned_data.get('first_name').strip()
-
-        if ' ' in data:
-            raise ValidationError(
-                'Must not have more than 2 names like "%(value)s"',
-                code='invalid',
-                params={'value': data}
-            )
-
-        return data
-
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')

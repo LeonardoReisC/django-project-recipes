@@ -18,7 +18,7 @@ class AuthorRegisterFormUnitTest(TestCase):
         form = RegisterForm()
         current_placeholder = form[field].field.widget.attrs['placeholder']
 
-        self.assertEqual(placeholder, current_placeholder)
+        self.assertEqual(current_placeholder, placeholder)
 
     @parameterized.expand([
         ('email', 'This e-mail must be valid.'),
@@ -32,4 +32,18 @@ class AuthorRegisterFormUnitTest(TestCase):
         form = RegisterForm()
         current_help_text = form[field].field.help_text
 
-        self.assertEqual(help_text, current_help_text)
+        self.assertEqual(current_help_text, help_text)
+
+    @parameterized.expand([
+        ('first_name', 'First name'),
+        ('last_name', 'Last name'),
+        ('username', 'Username'),
+        ('email', 'E-mail'),
+        ('password', 'Password'),
+        ('password2', 'Password2'),
+    ])
+    def test_fields_label_is_correct(self, field, label):
+        form = RegisterForm()
+        current_label = form[field].field.label
+
+        self.assertEqual(current_label, label)

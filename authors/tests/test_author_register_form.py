@@ -1,5 +1,7 @@
+from django.test import TestCase as DjangoTestCase
+from django.urls import reverse
 from parameterized import parameterized
-from django.test import TestCase
+from unittest import TestCase
 
 from authors.forms import RegisterForm
 
@@ -47,3 +49,17 @@ class AuthorRegisterFormUnitTest(TestCase):
         current_label = form[field].field.label
 
         self.assertEqual(current_label, label)
+
+
+class AuthorRegisterFormIntegrationTest(DjangoTestCase):
+    def setUp(self, *args, **kwargs) -> None:
+        self.form_data = {
+            'username': 'user',
+            'first_name': 'first',
+            'last_name': 'last',
+            'email': 'email@anyemail.com',
+            'password': 'Str0ngP@ssword',
+            'password_confirm': 'Str0ngP@ssword',
+        }
+
+        return super().setUp(*args, **kwargs)

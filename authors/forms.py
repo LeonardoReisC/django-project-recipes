@@ -25,8 +25,29 @@ def strong_password(password):
 
 
 class RegisterForm(forms.ModelForm):
+    first_name = forms.CharField(
+        error_messages={
+            'required': 'Write your first name.'
+        },
+        label='First name'
+    )
+
+    last_name = forms.CharField(
+        error_messages={
+            'required': 'Write your last name.'
+        },
+        label='Last name'
+    )
+
+    email = forms.EmailField(
+        error_messages={
+            'required': 'This field must not be empty.'
+        },
+        help_text='This e-mail must be valid.',
+        label='E-mail'
+    )
+
     password = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
         error_messages={
             'required': 'This field must not be empty.'
@@ -41,8 +62,10 @@ class RegisterForm(forms.ModelForm):
     )
 
     password_confirm = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
+        error_messages={
+            'required': 'This field must not be empty.'
+        },
         label='Confirm your password',
     )
 
@@ -69,12 +92,6 @@ class RegisterForm(forms.ModelForm):
         ]
         labels = {
             'first_name': 'First name',
-            'last_name': 'Last name',
-            'username': 'Username',
-            'email': 'E-mail',
-        }
-        help_texts = {
-            'email': 'This e-mail must be valid.'
         }
         error_messages = {
             'username': {
@@ -90,7 +107,7 @@ class RegisterForm(forms.ModelForm):
         if password != password_confirm:
             raise ValidationError({
                 'password_confirm': ValidationError(
-                    'Must be equal to password',
+                    'Must be equal to password.',
                     code='invalid',
                 ),
             })

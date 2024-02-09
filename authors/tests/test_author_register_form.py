@@ -63,3 +63,19 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         }
 
         return super().setUp(*args, **kwargs)
+
+    @parameterized.expand([
+        ('username', 'This field must not be empty.'),
+        ('first_name', 'Write your first name.'),
+        ('last_name', 'Write your last name.'),
+        ('email', 'This field must not be empty.'),
+        ('password', 'This field must not be empty.'),
+        ('password_confirm', 'This field must not be empty.'),
+    ])
+    def test_fields_cannot_be_empty(self, field, msg):
+        self.form_data[field] = ''
+
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        self.assertIn(msg, response.context['form'].errors.get(field))

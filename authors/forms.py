@@ -39,6 +39,18 @@ class RegisterForm(forms.ModelForm):
         label='Last name'
     )
 
+    username = forms.CharField(
+        error_messages={
+            'required': 'This field must not be empty.',
+            'min_length': 'Username must have at least 4 characters.',
+            'max_length': 'Username must have less than 150 characters.',
+        },
+        help_text='Must have between 4 and 150 characters.',
+        min_length=4,
+        max_length=150,
+        label='Username',
+    )
+
     email = forms.EmailField(
         error_messages={
             'required': 'This field must not be empty.'
@@ -90,14 +102,6 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password',
         ]
-        labels = {
-            'first_name': 'First name',
-        }
-        error_messages = {
-            'username': {
-                'required': 'This field must not be empty.'
-            }
-        }
 
     def clean(self):
         cleaned_data = super().clean()

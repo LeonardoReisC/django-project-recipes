@@ -84,7 +84,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
         self.assertIn(msg, response.context['form'].errors.get(field))
 
-    def test_username_min_length(self):
+    def test_username_field_min_length(self):
         self.form_data['username'] = 'abc'
 
         url = reverse('authors:create')
@@ -93,7 +93,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         msg = 'Username must have at least 4 characters.'
         self.assertIn(msg, response.context['form'].errors.get('username'))
 
-    def test_username_max_length(self):
+    def test_username_field_max_length(self):
         self.form_data['username'] = '.' * 151
 
         url = reverse('authors:create')
@@ -101,3 +101,35 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
         msg = 'Username must have less than 150 characters.'
         self.assertIn(msg, response.context['form'].errors.get('username'))
+
+    def test_password_field_validator_shows_error_message(self):
+        self.form_data['password'] = 'abcd@123'
+
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        msg = (
+            'Invalid password. '
+            'Please ensure it meets the minimum requirements.'
+        )
+        self.assertIn(msg, response.context['form'].errors.get('password'))
+
+    def test_password_field_validator_is_correct(self):
+        self.form_data['password'] = 'Abcd@123'
+
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        self.assertIsNone(response.context['form'].errors.get('password'))
+
+    def test_password_fieds_must_be_equal(self):
+        password = self.form_data['password']
+        self.form_data['password_confirm'] = password + '_'
+
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        msg = 'Must be equal to password.'
+        self.assertEqual(
+            msg, *response.context['form'].errors.get('password_confirm')
+        )

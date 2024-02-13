@@ -102,6 +102,15 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         msg = 'Username must have less than 150 characters.'
         self.assertIn(msg, response.context['form'].errors.get('username'))
 
+    def test_email_field_must_be_unique(self):
+        url = reverse('authors:create')
+
+        self.client.post(url, data=self.form_data, follow=True)
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        msg = "User email is already in use."
+        self.assertEqual(msg, *response.context['form'].errors.get('email'))
+
     def test_password_field_validator_shows_error_message(self):
         self.form_data['password'] = 'abcd@123'
 

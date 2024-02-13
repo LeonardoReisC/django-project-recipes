@@ -133,3 +133,19 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.assertEqual(
             msg, *response.context['form'].errors.get('password_confirm')
         )
+
+    def test_send_get_request_to_registration_create_view_returns_404(self):
+        url = reverse('authors:create')
+        response = self.client.get(url)
+        self.assertEqual(404, response.status_code)
+
+    def test_form_data_is_valid(self):
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        messages = ' '.join(map(
+            lambda message: message.message,
+            response.context['messages'])
+        )
+        msg_success = 'Registration complete, user successfully created.'
+        self.assertIn(msg_success, messages)

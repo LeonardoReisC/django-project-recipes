@@ -5,7 +5,12 @@
 {% block content %}
 
 <div class="main-content center container">
+    {% if request.user.is_authenticated %}
+    <h1>Logged in</h1>
+    <p>as <em>{{ request.user.username }}</em></p>
+    {% else %}
     <h1>Login</h1>
+    {% endif %}
 </div>
 
 {% include "global/partials/messages.html" %}

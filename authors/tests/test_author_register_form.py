@@ -156,7 +156,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
             lambda message: message.message,
             response.context['messages'])
         )
-        msg_success = 'Registration complete, user successfully created.'
+        msg_success = 'User successfully created, please log in.'
         self.assertIn(msg_success, messages)
 
     def test_author_created_can_login(self):

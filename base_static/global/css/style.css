@@ -336,7 +336,7 @@ h6 {
     display: block;
     margin: 0.5rem 0;
     font-size: 1.4rem;
-    list-style-type: none; 
+    list-style-type: none;
 }
 
 .errorlist {
@@ -362,6 +362,19 @@ h6 {
     border-radius: 0.4rem;
     background-color: var(--color-primary-dark);
     color: var(--color-white);
+}
+
+.inline-form {
+    display: inline;
+}
+
+.plaintext-button {
+    display: inline;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--color-primary);
+    font-size: 1.6rem;
 }
 
 /* Messages */

@@ -1,8 +1,10 @@
 from selenium.webdriver.common.by import By
+import pytest
 
 from .base import RecipeBaseFunctionalTest
 
 
+@pytest.mark.functional_tests
 class RecipeHomePageFunctionTest(RecipeBaseFunctionalTest):
 
     def test_recipes_home_page_shows_not_found_message_when_no_recipes(self):

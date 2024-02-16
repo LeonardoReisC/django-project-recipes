@@ -60,6 +60,14 @@ class RecipeMixin:
             author=self.make_author(**author_data),
         )
 
+    def make_recipes_in_batch(self, qty=10):
+        recipes = []
+        for i in range(qty):
+            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
+            recipe = self.make_recipe(**kwargs)
+            recipes.append(recipe)
+        return recipes
+
 
 class RecipeTestBase(TestCase, RecipeMixin):
     def setUp(self) -> None:

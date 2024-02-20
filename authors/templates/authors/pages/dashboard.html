@@ -11,11 +11,15 @@
     {% include 'authors/partials/login_message.html' with text="for" %}
 
     <div class="authors-dashboard-container">
-        <h3>Your recipes</h3>
+        <h2>Your recipes</h2>
 
         <ul>
             {% for recipe in recipes %}
-            <li><a href="#">{{ recipe.title }}</a></li>
+            <li>
+                <a href="{% url "authors:dashboard_recipe_edit" recipe.id %}">
+                    {{ recipe.title }}
+                </a>
+            </li>
             {% empty %}
             <li><p>You do not have recipes, please create one</p></li>
             {% endfor %}
@@ -23,6 +27,5 @@
         </ul>   
     </div>
 </div>
-
 
 {% endblock content %}

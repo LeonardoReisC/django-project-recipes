@@ -53,3 +53,29 @@ class AuthorsLoginFunctionalTest(AuthorsBaseFunctionalTest):
             'Not Found',
             self.browser.find_element(By.TAG_NAME, 'body').text
         )
+
+    def test_form_shows_error_message_if_login_is_invalid(self):
+        # Open login page
+        self.browser.get(self.live_server_url + reverse('authors:login'))
+
+        # See login form
+        form = self.browser.find_element(By.CLASS_NAME, 'main-form')
+        username = self.get_by_placeholder(
+            form, 'Type your username here'
+        )
+        password = self.get_by_placeholder(
+            form, 'Type your password here'
+        )
+
+        # Send empty values
+        username.send_keys(' ')
+        password.send_keys(' ')
+
+        # Submit form
+        form.submit()
+
+        # See error message
+        self.assertIn(
+            'Invalid username or password.',
+            self.browser.find_element(By.TAG_NAME, 'main').text
+        )

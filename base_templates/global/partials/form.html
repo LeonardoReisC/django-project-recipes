@@ -15,6 +15,12 @@
 
                 {{ field.errors }}
             </div>
+
+            {% if field.name == 'cover' and field.value.url %}
+            <div class="form-image-container span-2">
+                <img src="{{ field.value.url }}" alt="{{ recipe.title }} cover">
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
 

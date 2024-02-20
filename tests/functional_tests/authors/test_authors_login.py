@@ -40,7 +40,7 @@ class AuthorsLoginFunctionalTest(AuthorsBaseFunctionalTest):
 
         # See login success message
         self.assertIn(
-            'as my_user',
+            'for my_user',
             self.browser.find_element(By.TAG_NAME, 'main').text
         )
 

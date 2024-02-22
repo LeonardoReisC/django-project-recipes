@@ -4,6 +4,7 @@ from django.db.models.fields.files import ImageFieldFile
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.http.response import Http404
+from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 import os
 
@@ -13,6 +14,15 @@ from .models import Recipe
 PER_PAGE = int(os.environ.get('PER_PAGE', 3))
 
 # Create your views here.
+
+
+def theory(request):
+    recipes = Recipe.objects.filter().first()
+
+    return render(
+        request,
+        'recipes/pages/theory.html'
+    )
 
 
 class RecipeListViewBase(ListView):

@@ -1,4 +1,7 @@
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
+from django.db.models.fields.files import ImageFieldFile
+from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.http.response import Http404
 from django.views.generic import DetailView, ListView
@@ -131,3 +134,38 @@ class RecipeDetailView(DetailView):
         })
 
         return context
+
+
+class RecipeDetailViewApi(RecipeDetailView):
+    class RecipeEncoder(DjangoJSONEncoder):
+        def __init__(self, request, **kwargs) -> None:
+            super().__init__(**kwargs)
+            self.request = request
+
+        def default(self, o):
+            if isinstance(o, ImageFieldFile):
+                return self.request.get_host() + o.url
+
+            return super().default(o)
+
+    def render_to_response(self, context, **response_kwargs):
+        recipe_model = self.get_context_data().get('recipe')
+        recipe_dict = model_to_dict(
+            recipe_model,
+            exclude=['is_published', 'preparation_steps_is_html']
+        )
+
+        recipe_dict.update({
+            'created_at': recipe_model.created_at,
+            'updated_at': recipe_model.updated_at,
+        })
+
+        return JsonResponse(
+            recipe_dict,
+            encoder=self.RecipeEncoder,
+            safe=False,
+            json_dumps_params={
+                'indent': 2,
+                'request': self.request,
+            }
+        )

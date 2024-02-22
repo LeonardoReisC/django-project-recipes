@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.http import JsonResponse
 from django.http.response import Http404
 from django.views.generic import DetailView, ListView
 import os
@@ -43,6 +44,15 @@ class RecipeListViewBase(ListView):
 
 class RecipeListViewHome(RecipeListViewBase):
     template_name = 'recipes/pages/home.html'
+
+
+class RecipeListViewHomeApi(RecipeListViewBase):
+    template_name = 'recipes/pages/home.html'
+
+    def render_to_response(self, context, **response_kwargs):
+        recipes = self.get_context_data().get('recipes').object_list.values()
+
+        return JsonResponse(list(recipes), safe=False)
 
 
 class RecipeListViewCategory(RecipeListViewBase):

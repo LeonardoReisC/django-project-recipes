@@ -17,7 +17,8 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 3))
 
 
 def theory(request):
-    recipes = Recipe.objects.values('id', 'title', 'author__username')
+    recipes = Recipe.objects.only('id', 'title')
+    # recipes = Recipe.objects.deferr('is_published')
 
     return render(
         request,

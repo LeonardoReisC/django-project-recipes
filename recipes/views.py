@@ -1,5 +1,6 @@
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
+from django.db.models.aggregates import Count
 from django.db.models.fields.files import ImageFieldFile
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
@@ -18,13 +19,14 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 3))
 
 def theory(request):
     recipes = Recipe.objects.only('id', 'title')
-    # recipes = Recipe.objects.deferr('is_published')
+    number_of_recipes = recipes.aggregate(number=Count('id'))
 
     return render(
         request,
         'recipes/pages/theory.html',
         context={
-            'recipes': recipes
+            'recipes': recipes,
+            'number_of_recipes': number_of_recipes['number'],
         }
     )
 

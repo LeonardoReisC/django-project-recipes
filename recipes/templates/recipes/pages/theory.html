@@ -8,6 +8,8 @@
 <body>
     <h1>Theory</h1>
 
+    <p>There are {{ number_of_recipes }} recipes.</p>
+
     <ul>
         {% for recipe in recipes %}
         <li>{{ recipe.id }} {{ recipe.title }}</li>

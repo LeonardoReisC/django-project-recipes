@@ -276,6 +276,10 @@ a {
     padding: var(--spacing-gutter-medium);
 }
 
+.recipe-tags {
+    margin-top: 2rem;
+}
+
 .main-footer {
     display: flex;
     align-items: center;

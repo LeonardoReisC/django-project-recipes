@@ -1,4 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from django.db.models.fields.files import ImageFieldFile
@@ -18,10 +17,15 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 3))
 
 
 def theory(request):
-    try:
-        recipes = Recipe.objects.get(pk=100)
-    except ObjectDoesNotExist:
-        recipes = None
+    recipes = Recipe.objects.filter(
+        Q(
+            title__icontains='ry',
+            id__gte=15
+        ) |
+        Q(
+            title__icontains='egg',
+        )
+    )
 
     return render(
         request,

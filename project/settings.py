@@ -14,6 +14,8 @@ from django.contrib.messages import constants
 from pathlib import Path
 import os
 
+from utils.environment import gen_env_variable, parse_csv_str_to_list
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +29,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if int(os.environ.get('DEBUG', 0)) else False
 
-ALLOWED_HOSTS: list[str] = ['*']
+ALLOWED_HOSTS: list[str] = parse_csv_str_to_list(
+    gen_env_variable('ALLOWED_HOSTS')
+)
+CSRF_TRUSTED_ORIGINS: list[str] = parse_csv_str_to_list(
+    gen_env_variable('CSRF_TRUSTED_ORIGINS')
+)
 
 
 # Application definition

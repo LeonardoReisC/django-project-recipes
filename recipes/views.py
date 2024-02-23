@@ -1,5 +1,5 @@
 from django.core.serializers.json import DjangoJSONEncoder
-from django.db.models import Q
+from django.db.models import F, Q
 from django.db.models.fields.files import ImageFieldFile
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
@@ -18,14 +18,8 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 3))
 
 def theory(request):
     recipes = Recipe.objects.filter(
-        Q(
-            title__icontains='ry',
-            id__gte=15
-        ) |
-        Q(
-            title__icontains='egg',
-        )
-    )
+        id__lte=F('servings'),
+    ).order_by('-title')[:2]
 
     return render(
         request,

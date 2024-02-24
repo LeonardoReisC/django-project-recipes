@@ -1,7 +1,7 @@
 import os
 
 
-def gen_env_variable(variable_name, default_value=''):
+def get_env_variable(variable_name, default_value=''):
     return os.environ.get(variable_name, default_value)
 
 

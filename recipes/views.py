@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.http.response import Http404
 from django.shortcuts import render
 from django.utils import translation
+from django.utils.translation import gettext as _
 from django.views.generic import DetailView, ListView
 
 from tag.models import Tag
@@ -101,9 +102,12 @@ class RecipeListViewCategory(RecipeListViewBase):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        category_translation = _('Category')
+
         context.update({
             'title': (
-                f'{context.get("recipes")[0].category.name} - Category | '
+                f'{context.get("recipes")[0].category.name} - '
+                f'{category_translation} | '
             ),
         })
 

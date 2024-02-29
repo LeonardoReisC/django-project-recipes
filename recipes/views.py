@@ -1,3 +1,5 @@
+import os
+
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from django.db.models.aggregates import Count
@@ -6,12 +8,13 @@ from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.http.response import Http404
 from django.shortcuts import render
+from django.utils import translation
 from django.views.generic import DetailView, ListView
-import os
 
-from .models import Recipe
 from tag.models import Tag
 from utils.pagination import make_pagination
+
+from .models import Recipe
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 3))
 
@@ -58,9 +61,12 @@ class RecipeListViewBase(ListView):
             PER_PAGE
         )
 
+        html_language = translation.get_language()
+
         context.update({
             'recipes': page_obj,
             'pagination_range': pagination_range,
+            'html_language': html_language,
         })
 
         return context

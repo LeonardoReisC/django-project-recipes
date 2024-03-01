@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from authors.validator import RecipeValidator
 from recipes.models import Recipe
 
 
@@ -8,7 +9,9 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = [
             'id', 'title', 'description',
-            'preparation', 'author', 'category',
+            'preparation', 'preparation_time', 'preparation_time_unit',
+            'servings', 'servings_unit', 'cover',
+            'preparation_steps', 'author', 'category',
             'tags', 'public'
         ]
 
@@ -23,3 +26,13 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_preparation(self, recipe):
         return f'{recipe.preparation_time} {recipe.preparation_time_unit}'
+
+    def validate(self, attrs):
+        validated_data = super().validate(attrs)
+
+        RecipeValidator(
+            validated_data,
+            error_class=serializers.ValidationError
+        )
+
+        return validated_data

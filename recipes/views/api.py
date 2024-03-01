@@ -8,6 +8,7 @@ from recipes.models import Recipe
 from recipes.serializer import RecipeSerializer
 from tag.models import Tag
 from tag.serializer import TagSerializer
+from utils.strings import is_positive_number
 
 
 class RecipeAPUV2Pagination(PageNumberPagination):
@@ -18,6 +19,16 @@ class RecipeAPIV2ViewSet(ModelViewSet):
     queryset = Recipe.objects.get_published()
     serializer_class = RecipeSerializer
     pagination_class = RecipeAPUV2Pagination
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+
+        category_id = self.request.query_params.get('category_id')
+
+        if category_id is not None and is_positive_number(category_id):
+            qs = qs.filter(category_id=category_id)
+
+        return qs
 
 
 @api_view()

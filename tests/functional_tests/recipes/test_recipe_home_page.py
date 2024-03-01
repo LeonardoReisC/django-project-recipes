@@ -18,7 +18,7 @@ class RecipeHomePageFunctionTest(RecipeBaseFunctionalTest, RecipeMixin):
 
         self.assertIn(text, body.text)
 
-    @patch('recipes.views.PER_PAGE', new=3)
+    @patch('recipes.views.site.PER_PAGE', new=3)
     def test_recipe_search_input_find_the_correct_recipes(self):
         recipes = self.make_recipes_in_batch()
 
@@ -45,7 +45,7 @@ class RecipeHomePageFunctionTest(RecipeBaseFunctionalTest, RecipeMixin):
             self.browser.find_element(By.TAG_NAME, 'main').text
         )
 
-    @patch('recipes.views.PER_PAGE', new=3)
+    @patch('recipes.views.site.PER_PAGE', new=3)
     def test_recipe_home_page_pagination(self):
         self.make_recipes_in_batch()
 

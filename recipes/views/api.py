@@ -1,5 +1,3 @@
-from unicodedata import category
-
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -32,27 +30,38 @@ def recipe_api_list(request):
             }
         )
         serializer.is_valid(raise_exception=True)
-        serializer.save(
-            author_id=1,
-            category_id=1,
-            tags=[1, 2],
-
-        )
+        serializer.save()
         return Response(
             serializer.data,
             status=status.HTTP_201_CREATED
         )
 
 
-@api_view()
+@api_view(['get', 'patch', 'delete'])
 def recipe_api_detail(request, pk):
     recipe = get_object_or_404(Recipe.objects.get_published(), pk=pk)
-    serializer = RecipeSerializer(
-        instance=recipe,
-        context={
-            'request': request
-        }
-    )
+
+    if request.method == 'GET':
+        serializer = RecipeSerializer(
+            instance=recipe,
+            context={
+                'request': request
+            }
+        )
+    elif request.method == 'PATCH':
+        serializer = RecipeSerializer(
+            instance=recipe,
+            data=request.data,
+            context={
+                'request': request
+            },
+            partial=True,
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+    elif request.method == 'DELETE':
+        recipe.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(serializer.data)
 

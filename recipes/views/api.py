@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from recipes.models import Recipe
-from recipes.views.serializers import RecipeSerializer
+from recipes.serializers import RecipeSerializer
 
 
 @api_view()

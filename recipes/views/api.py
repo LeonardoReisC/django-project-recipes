@@ -23,6 +23,9 @@ class RecipeAPIV2ViewSet(ModelViewSet):
     pagination_class = RecipeAPUV2Pagination
     permission_classes = [IsAuthenticatedOrReadOnly, ]
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
     def get_object(self):
         pk = self.kwargs.get('pk', '')
         obj = get_object_or_404(
